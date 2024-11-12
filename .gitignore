@@ -1,26 +1,18 @@
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-._*
+/*
 
-# Linux
-*~
-.fuse_hidden*
-.directory
-.Trash-*
-.nfs*
-
-# VS Code
-.vscode/
-.history/
-*.vsix
-
-# JetBrains
-.idea/
-
-# Project
-dist/
-node_modules/
-report/
-*.log
+!.husky
+!docs
+!scripts
+!src
+!.eslintrc.js
+!.gitignore
+!.prettierrc.js
+!LICENSE
+!package.json
+!Readme.md
+!tsconfig.json
+!tsconfig.production.json
+!vite.config.js
+!vitest-setup.js
+!vitest.config.js
+!yarn.lock
