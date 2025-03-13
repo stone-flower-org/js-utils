@@ -26,5 +26,20 @@ export const round = (val: number, { precision = 0, type = RoundType.HALF_UP }: 
 // TODO: write tests
 export const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(val, max));
 
+// TODO: write tests
+export const map = (val: number, inMin: number, inMax: number, outMin: number, outMax: number) =>
+  ((val - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+
+// TODO: write tests
+export const mapNClamp = (val: number, inMin: number, inMax: number, outMin: number, outMax: number) =>
+  clamp(map(val, inMin, inMax, outMin, outMax), outMin, outMax);
+
+// TODO: write tests
+export const loop = (val: number, min: number, max: number) => {
+  const dist = max - min + 1;
+  const i = Math.floor((val - min) / dist);
+  return val - i * dist;
+};
+
 // TODO: write unit tests
 export const randomBetween = (from: number, to: number) => from + Math.floor(Math.random() * (to - from + 1));
