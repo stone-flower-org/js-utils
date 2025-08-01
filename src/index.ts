@@ -1,3 +1,4 @@
+export * from './cache';
 export * from './collection';
 export * from './command-manager';
 export * from './context-saver';
