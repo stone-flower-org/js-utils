@@ -40,19 +40,20 @@ describe('range', () => {
       to: -1,
       generated: [],
     },
-  ])(
-    'should call generator funciton with given numbers range and return generated numbers array',
-    ({ from, to, generated }) => {
-      it(`from: ${from}, to: ${to}, generated: ${JSON.stringify(generated)}`, () => {
-        const generatorMock = vi.fn().mockImplementation((number: number) => number);
-        expect(range(from, to, generatorMock)).toEqual(generated);
-        expect(generatorMock).toHaveBeenCalledTimes(generated.length);
-        generated.forEach((number, i) => {
-          expect(generatorMock).toHaveBeenNthCalledWith(i + 1, number);
-        });
+  ])('should call generator funciton with given numbers range and return generated numbers array', ({
+    from,
+    to,
+    generated,
+  }) => {
+    it(`from: ${from}, to: ${to}, generated: ${JSON.stringify(generated)}`, () => {
+      const generatorMock = vi.fn().mockImplementation((number: number) => number);
+      expect(range(from, to, generatorMock)).toEqual(generated);
+      expect(generatorMock).toHaveBeenCalledTimes(generated.length);
+      generated.forEach((number, i) => {
+        expect(generatorMock).toHaveBeenNthCalledWith(i + 1, number);
       });
-    },
-  );
+    });
+  });
 });
 
 describe('areArraysEqual', () => {
@@ -92,14 +93,17 @@ describe('areArraysEqual', () => {
       comparator: () => -1,
       expectedResult: false,
     },
-  ])(
-    'should return true when 2 arrays are equal based on given comparator',
-    ({ name, a, b, comparator, expectedResult }) => {
-      it(`${name}`, () => {
-        expect(areArraysEqual(a, b, comparator)).toBe(expectedResult);
-      });
-    },
-  );
+  ])('should return true when 2 arrays are equal based on given comparator', ({
+    name,
+    a,
+    b,
+    comparator,
+    expectedResult,
+  }) => {
+    it(`${name}`, () => {
+      expect(areArraysEqual(a, b, comparator)).toBe(expectedResult);
+    });
+  });
 });
 
 describe.each([

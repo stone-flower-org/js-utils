@@ -1,4 +1,4 @@
-import { round, RoundType } from './number';
+import { RoundType, round } from './number';
 
 describe('round', () => {
   describe.each([
@@ -121,12 +121,15 @@ describe('round', () => {
       type: RoundType.DOWN,
       ...params,
     })),
-  ])(
-    'should round given number with provided precision and rounding type',
-    ({ name, value, precision, type, expectedResult }) => {
-      it(`${name}`, () => {
-        expect(round(value, { precision, type })).toBe(expectedResult);
-      });
-    },
-  );
+  ])('should round given number with provided precision and rounding type', ({
+    name,
+    value,
+    precision,
+    type,
+    expectedResult,
+  }) => {
+    it(`${name}`, () => {
+      expect(round(value, { precision, type })).toBe(expectedResult);
+    });
+  });
 });

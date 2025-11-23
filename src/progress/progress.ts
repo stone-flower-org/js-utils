@@ -1,4 +1,4 @@
-import { EventBus, createSubscriptionForEventBus } from '@/src/events';
+import { createSubscriptionForEventBus, EventBus } from '@/src/events';
 
 export type ProgressSubscribeArgs = [Progress];
 
@@ -33,7 +33,7 @@ export class Progress {
   }
 
   advance(_step = 1) {
-    this._options.step = Math.min(this._options.step + _step);
+    this._options.step = Math.min(this._options.totalSteps, this._options.step + _step);
     this._eventBus.emit('change', this);
   }
 

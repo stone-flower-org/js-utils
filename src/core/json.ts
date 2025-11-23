@@ -1,16 +1,18 @@
 // TODO: write unit tests
-export const parseJSONSafe = (json: string) => {
+export const parseJSONSafe = (json: string, def: unknown = null) => {
   try {
     return JSON.parse(json);
   } catch (_) {
-    return null;
+    return def;
   }
 };
 
 export const beautifyJSONSafe = (json: string, space = 2) => {
   try {
     json = JSON.stringify(JSON.parse(json), undefined, space);
-  } catch (_) {}
+  } catch (_) {
+    //
+  }
   return json;
 };
 

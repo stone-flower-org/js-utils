@@ -1,17 +1,17 @@
 import { vi } from 'vitest';
 
-import { createProgress } from './progress';
+import { Progress } from './progress';
 
 describe('createProgress', () => {
   it('should return Progress instance', () => {
-    expect(createProgress()).toBeInstanceOf(Object);
+    expect(Progress.create()).toBeInstanceOf(Object);
   });
 
   it('should throw error when provided step is less than 0', () => {
     const options = {
       step: -1,
     };
-    expect(() => createProgress(options)).toThrow('provided step must be between 0 and totalSteps');
+    expect(() => Progress.create(options)).toThrow('provided step must be between 0 and totalSteps');
   });
 
   it('should throw error when provided step is greater than totalSteps', () => {
@@ -19,7 +19,7 @@ describe('createProgress', () => {
       totalSteps: 10,
       step: 11,
     };
-    expect(() => createProgress(options)).toThrow('provided step must be between 0 and totalSteps');
+    expect(() => Progress.create(options)).toThrow('provided step must be between 0 and totalSteps');
   });
 
   describe('Progress', () => {
@@ -54,7 +54,7 @@ describe('createProgress', () => {
         },
       ])('should increase current step by provided step', ({ name, options, value, expectedResult }) => {
         it(`${name}`, () => {
-          const progress = createProgress(options);
+          const progress = Progress.create(options);
           progress.advance(value);
           expect(progress.getStep()).toBe(expectedResult);
         });
@@ -62,7 +62,7 @@ describe('createProgress', () => {
 
       it('should call subscriber after call', () => {
         const subscriber = vi.fn();
-        const progress = createProgress();
+        const progress = Progress.create();
         progress.subscribe(subscriber);
 
         progress.advance();
@@ -102,7 +102,7 @@ describe('createProgress', () => {
         },
       ])('should decrease current step by provided step', ({ name, options, value, expectedResult }) => {
         it(`${name}`, () => {
-          const progress = createProgress(options);
+          const progress = Progress.create(options);
           progress.retreat(value);
           expect(progress.getStep()).toBe(expectedResult);
         });
@@ -110,7 +110,7 @@ describe('createProgress', () => {
 
       it('should call subscribers after call', () => {
         const subscriber = vi.fn();
-        const progress = createProgress();
+        const progress = Progress.create();
         progress.subscribe(subscriber);
 
         progress.retreat();
@@ -124,14 +124,14 @@ describe('createProgress', () => {
         const options = {
           totalSteps: 100,
         };
-        const progress = createProgress(options);
+        const progress = Progress.create(options);
         progress.finish();
         expect(progress.getStep()).toBe(options.totalSteps);
       });
 
       it('should call subscriber after call', () => {
         const subscriber = vi.fn();
-        const progress = createProgress();
+        const progress = Progress.create();
         progress.subscribe(subscriber);
 
         progress.finish();
@@ -145,14 +145,14 @@ describe('createProgress', () => {
         const options = {
           step: 1,
         };
-        const progress = createProgress(options);
+        const progress = Progress.create(options);
         progress.reset();
         expect(progress.getStep()).toBe(0);
       });
 
       it('should call subscriber after call', () => {
         const subscriber = vi.fn();
-        const progress = createProgress();
+        const progress = Progress.create();
         progress.subscribe(subscriber);
 
         progress.reset();
@@ -181,7 +181,7 @@ describe('createProgress', () => {
         },
       ])('should return true when step is equal to totalSteps', ({ name, options, expectedResult }) => {
         it(`${name}`, () => {
-          const progress = createProgress(options);
+          const progress = Progress.create(options);
           expect(progress.isFinished()).toBe(expectedResult);
         });
       });
@@ -193,7 +193,7 @@ describe('createProgress', () => {
           step: 1,
           totalSteps: 10,
         };
-        const progress = createProgress(options);
+        const progress = Progress.create(options);
         expect(progress.getProgress()).toBe(options.step / options.totalSteps);
       });
     });
@@ -204,7 +204,7 @@ describe('createProgress', () => {
           step: 0,
           totalSteps: 10,
         };
-        const progress = createProgress(options);
+        const progress = Progress.create(options);
         progress.advance();
         expect(progress.getStep()).toBe(options.step + 1);
       });
@@ -215,7 +215,7 @@ describe('createProgress', () => {
         const options = {
           totalSteps: 100,
         };
-        const progress = createProgress(options);
+        const progress = Progress.create(options);
         expect(progress.getTotalSteps()).toBe(options.totalSteps);
       });
     });

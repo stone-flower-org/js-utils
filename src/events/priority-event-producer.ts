@@ -1,11 +1,11 @@
-import { Args, Constructor } from '@/src/core';
+import { Constructor } from '@/src/core';
 import { ListenerFunc } from '@/src/events';
-import { IPriorityEventBus, PriorityCheckFunc, PriorityEventBus } from './priority-event-bus';
+
+import { IPriorityEventBus, PriorityEventBus } from './priority-event-bus';
 
 export interface IPriorityEventProducer extends Omit<IPriorityEventBus, 'emit' | 'emitWherePriority'> {}
 
 export type IWithPriorityEventProducer<T = object> = IPriorityEventProducer & T;
-
 
 export const WithPriorityEventProducer = <S extends Constructor>(superclass: S) =>
   class extends superclass {

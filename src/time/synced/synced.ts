@@ -7,7 +7,7 @@ export type IWithSyncedClock<T = object> = {
   syncClock(clock: ITickingClock): void;
 } & T;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: use any args
 export const WithSyncedClock = <S extends Constructor<any[], IClock>>(superclass: S) =>
   class extends superclass {
     _syncBinder = createContextSaver(this);

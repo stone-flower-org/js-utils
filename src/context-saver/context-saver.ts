@@ -1,12 +1,13 @@
 export interface ContextSaver {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: use any args and return params
   useFunc<F extends (...args: any[]) => any>(callback: F): F;
 }
 
+// TODO: write unit tests
 export const createContextSaver = (that: object): ContextSaver => {
   const map = new Map<string, () => void>();
   return {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: use any args and return params
     useFunc<F extends (...args: any[]) => any>(callback: F): F {
       let f = map.get(callback.name);
       if (f) return f as F;

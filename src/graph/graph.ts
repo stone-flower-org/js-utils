@@ -89,7 +89,6 @@ export class Graph<ND = unknown, ED = unknown> {
   }
 
   getEdgesFrom(u: string): IterableIterator<GraphEdge<ED>> {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const edgeIterator = that._adjMatrix.get(u)?.entries();
     return {
@@ -120,7 +119,6 @@ export class Graph<ND = unknown, ED = unknown> {
   }
 
   getAllEdges(): IterableIterator<GraphEdge<ED>> {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const nodesIterator = this.getAllNodes();
     let edgesIterator: Iterator<GraphEdge<ED>> | undefined;
@@ -161,7 +159,6 @@ export class Graph<ND = unknown, ED = unknown> {
   }
 
   getAllNodes(): IterableIterator<GraphNode<ND>> {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const nodeIterator = this._adjMatrix.keys();
     return {

@@ -36,7 +36,7 @@ export type Nullable<T> = T | null | undefined;
 
 export type VoidFunc = () => void;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: use any args
 export type Args = any[];
 
 export type Func = (...args: Args) => unknown;

@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 
-import { createEventBus, createSubscriptionForEventBus } from './event-bus';
+import { EventBus } from './event-bus';
 
 const defaultEvent = 'event';
 const makeEventListeners = () =>
@@ -12,14 +12,14 @@ const makeEventListeners = () =>
 
 describe('createEventBus', () => {
   it('should return EventBus instance', () => {
-    expect(createEventBus()).toBeInstanceOf(Object);
+    expect(EventBus.create()).toBeInstanceOf(Object);
   });
 
   describe('EventBus', () => {
     describe('on', () => {
       it('should add event listener to event bus', () => {
         const listener = vi.fn();
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
 
         eventBus.on(defaultEvent, listener);
         eventBus.emit(defaultEvent);
@@ -31,7 +31,7 @@ describe('createEventBus', () => {
         const eventA = 'eventA';
         const eventB = 'eventB';
         const listener = vi.fn();
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
 
         const unsubscribeA = eventBus.on(eventA, listener);
         eventBus.on(eventB, listener);
@@ -50,7 +50,7 @@ describe('createEventBus', () => {
         const eventA = 'eventA';
         const eventB = 'eventB';
         const listener = vi.fn();
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
 
         eventBus.on(eventA, listener);
         eventBus.on(eventB, listener);
@@ -65,7 +65,7 @@ describe('createEventBus', () => {
 
       it('should do nothing when event bus is empty', () => {
         const listener = vi.fn();
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
 
         expect(() => {
           eventBus.off(defaultEvent, listener);
@@ -77,7 +77,7 @@ describe('createEventBus', () => {
       it('should call provided event listeners with provided args', () => {
         const args = [1, 2];
         const listeners = [vi.fn(), vi.fn()];
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
         listeners.forEach((listener) => eventBus.on(defaultEvent, listener));
 
         eventBus.emit(defaultEvent, ...args);
@@ -91,7 +91,7 @@ describe('createEventBus', () => {
         const eventListeners = makeEventListeners();
         const calledListeners = [eventListeners[0]];
         const notCalledListeners = [eventListeners[1], eventListeners[2]];
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
         eventListeners.forEach(([event, listeners]) => {
           listeners.forEach((listener) => eventBus.on(event, listener));
         });
@@ -111,7 +111,7 @@ describe('createEventBus', () => {
       });
 
       it('should do nothing when event bus is empty', () => {
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
 
         expect(() => {
           eventBus.emit(defaultEvent);
@@ -124,7 +124,7 @@ describe('createEventBus', () => {
         const eventListeners = makeEventListeners();
         const removedListeners = [eventListeners[0], eventListeners[1]] as const;
         const usedListeners = [eventListeners[2]] as const;
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
         eventListeners.forEach(([event, listeners]) => {
           listeners.forEach((listener) => eventBus.on(event, listener));
         });
@@ -143,7 +143,7 @@ describe('createEventBus', () => {
 
       it('should remove all listeners when called without args', () => {
         const eventListeners = makeEventListeners();
-        const eventBus = createEventBus();
+        const eventBus = EventBus.create();
         eventListeners.forEach(([event, listeners]) => {
           listeners.forEach((listener) => eventBus.on(event, listener));
         });
@@ -158,33 +158,6 @@ describe('createEventBus', () => {
           });
         });
       });
-    });
-  });
-});
-
-describe('createSubscriptionForEventBus', () => {
-  describe('it should return subscribe function', () => {
-    it('should add event listener to provided EventBus and listen provided event after call', () => {
-      const listener = vi.fn();
-      const eventBus = createEventBus();
-      const subsribe = createSubscriptionForEventBus(eventBus, defaultEvent);
-
-      subsribe(listener);
-      eventBus.emit(defaultEvent);
-
-      expect(listener).toHaveBeenCalled();
-    });
-
-    it('should return unsubscribe function, it should remove listener from event bus after call', () => {
-      const listener = vi.fn();
-      const eventBus = createEventBus();
-      const subsribe = createSubscriptionForEventBus(eventBus, defaultEvent);
-
-      const unsubscribe = subsribe(listener);
-      unsubscribe();
-      eventBus.emit(defaultEvent);
-
-      expect(listener).not.toHaveBeenCalled();
     });
   });
 });

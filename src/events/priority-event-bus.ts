@@ -1,5 +1,6 @@
-import { Args, binaryInsert } from "@/src/core";
-import { ListenerFunc } from "./event-bus";
+import { Args, binaryInsert } from '@/src/core';
+
+import { ListenerFunc } from './event-bus';
 
 export type PrioritizedEventListener = [ListenerFunc, number];
 
@@ -33,14 +34,14 @@ export class PriorityEventBus {
     this._listenersByEvent.set(event, newListeners);
   }
 
-  emitWherePriority(event: string, checkPriority?: PriorityCheckFunc, ...args: any[]) {
+  emitWherePriority(event: string, checkPriority?: PriorityCheckFunc, ...args: Args) {
     (this._listenersByEvent.get(event) ?? []).forEach(([listener, priority]) => {
       if (checkPriority && !checkPriority(priority)) return;
       listener(...args);
     });
   }
 
-  emit(event: string, ...args: any[]) {
+  emit(event: string, ...args: Args) {
     this.emitWherePriority(event, undefined, ...args);
   }
 

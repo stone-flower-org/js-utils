@@ -11,7 +11,9 @@ export class EventBus {
     return new this();
   }
 
-  constructor() {}
+  constructor() {
+    //
+  }
 
   on(event: string, listener: ListenerFunc) {
     let listeners = this._listenersStore.get(event);
